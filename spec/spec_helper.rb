@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'rack/test'
 require 'redis'
 require 'timecop'
-require 'rack/defense'
+require 'cf-defense'
 
 class MiniTest::Spec
   include Rack::Test::Methods
@@ -13,7 +13,7 @@ class MiniTest::Spec
 
   def app
     Rack::Builder.new {
-      use CfDefense
+      use CfDefense::Middleware
       run ->(_) { [200, {}, ['Hello World']] }
     }.to_app
   end

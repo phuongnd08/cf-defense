@@ -1,11 +1,11 @@
 require_relative 'spec_helper'
-describe 'CfDefense::ban' do
+describe 'CfDefense::Middleware::ban' do
   before do
     #
     # configure the CfDefense middleware with a ban
     # strategy.
     #
-    CfDefense.setup do |config|
+    CfDefense::Middleware.setup do |config|
       # allow only given ips on path
       config.ban('allow_only_ip_list') do |req|
         req.path == '/protected' && !%w(192.168.0.1 127.0.0.1).include?(req.ip)

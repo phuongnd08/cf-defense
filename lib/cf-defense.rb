@@ -3,9 +3,9 @@ require 'redis'
 require 'delegate'
 
 module CfDefense
-  class Middleware
-    autoload :ThrottleCounter, 'cf-defense/throttle_counter'
+  autoload :ThrottleCounter, 'cf-defense/throttle_counter'
 
+  class Middleware
     class Config
       BANNED_RESPONSE = ->(_) { [403, {'Content-Type' => 'text/plain'}, ["Forbidden\n"]] }
       THROTTLED_RESPONSE = ->(_) { [429, {'Content-Type' => 'text/plain'}, ["Retry later\n"]] }

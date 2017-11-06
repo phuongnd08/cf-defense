@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'CfDefense::throttle' do
+describe 'CfDefense::Middleware::throttle' do
   def window
     60 * 1000 # in milliseconds
   end
@@ -12,7 +12,7 @@ describe 'CfDefense::throttle' do
     # configure the CfDefense middleware with throttling
     # strategies.
     #
-    CfDefense.setup do |config|
+    CfDefense::Middleware.setup do |config|
       # allow only 3 post requests on path '/login' per #window per ip
       config.throttle('login', 3, window) do |req|
         req.ip if req.path == '/login' && req.post?

@@ -1,12 +1,12 @@
 require_relative 'spec_helper'
 
-describe 'CfDefense::throttle_expire_keys' do
+describe 'CfDefense::Middleware::throttle_expire_keys' do
   def window
     10 * 1000 # in milliseconds
   end
 
   before do
-    CfDefense.setup do |config|
+    CfDefense::Middleware.setup do |config|
       # allow 1 requests per #window per ip
       config.throttle('rule', 3, window) { |req| req.ip if req.path == '/path' }
     end
@@ -15,7 +15,7 @@ describe 'CfDefense::throttle_expire_keys' do
   it 'expire throttle key' do
     ip = '192.168.169.244'
     throttle_key = "#{CfDefense::ThrottleCounter::KEY_PREFIX}:rule:#{ip}"
-    redis = CfDefense.config.store
+    redis = CfDefense::Middleware.config.store
     start = Time.now.to_i
     3.times do
       get '/path', {}, 'REMOTE_ADDR' => ip

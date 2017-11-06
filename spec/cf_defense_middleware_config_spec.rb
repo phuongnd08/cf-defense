@@ -1,8 +1,8 @@
 require_relative 'spec_helper'
 
-describe CfDefense::Config do
+describe CfDefense::Middleware::Config do
   before do
-    @config = CfDefense::Config.new
+    @config = CfDefense::Middleware::Config.new
   end
 
   describe 'store' do
