@@ -1,12 +1,12 @@
 require_relative 'spec_helper'
 
-describe Rack::Defense::ThrottleCounter do
+describe CfDefense::ThrottleCounter do
   before do
     @key = '192.168.0.1'
   end
   describe '.throttle?' do
     window = 60 * 1000
-    before { @counter = Rack::Defense::ThrottleCounter.new('upload_photo', 5, window, Redis.current) }
+    before { @counter = CfDefense::ThrottleCounter.new('upload_photo', 5, window, Redis.current) }
     it 'allow request number max_requests if after period' do
       do_max_requests_minus_one
       refute @counter.throttle? @key, window + 1
@@ -42,8 +42,8 @@ describe Rack::Defense::ThrottleCounter do
   describe 'expire keys' do
     before do
       @redis = Redis.current
-      @counter = Rack::Defense::ThrottleCounter.new('rule_name', 3, 10 * 1000, @redis)
-      @throttle_key = "#{Rack::Defense::ThrottleCounter::KEY_PREFIX}:rule_name:#{@key}"
+      @counter = CfDefense::ThrottleCounter.new('rule_name', 3, 10 * 1000, @redis)
+      @throttle_key = "#{CfDefense::ThrottleCounter::KEY_PREFIX}:rule_name:#{@key}"
     end
     it 'expire throttle key' do
       start = Time.now.to_i

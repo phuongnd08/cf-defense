@@ -1,12 +1,12 @@
 require_relative 'spec_helper'
 
-describe 'Rack::Defense::callbacks' do
+describe 'CfDefense::callbacks' do
   before do
     @start_time = Time.utc(2015, 10, 30, 21, 0, 0)
     @throttled = []
     @banned = []
 
-    Rack::Defense.setup do |config|
+    CfDefense.setup do |config|
       config.throttle('login', 3, 10 * 1000) do |req|
         req.ip if req.path == '/login' && req.post?
       end

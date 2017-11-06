@@ -40,7 +40,7 @@ This avoids having to do the store initialization (`Config#sotre=`) -if any- bef
 throttle rules (`Config#throttle`). For instance, the following configuration is now correct:
 
 ```ruby
-Rack::Defense.setup do |config|
+CfDefense.setup do |config|
   config.throttle('name', 100, 1000) { |req| req.ip if req.path='/path' }
 
   # no need to set the store before the throttle rule. it can be done at any moment in config section
@@ -53,4 +53,4 @@ tag 0.1.0
 
 * Throttle requests using a sliding window with period/max_request and request criteria.
 * Ban (block) requests matching criteria.
-* `Rack::Defense#setup` to configure redis store and throttled and banned responses
+* `CfDefense#setup` to configure redis store and throttled and banned responses

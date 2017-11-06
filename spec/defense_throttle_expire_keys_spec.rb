@@ -1,12 +1,12 @@
 require_relative 'spec_helper'
 
-describe 'Rack::Defense::throttle_expire_keys' do
+describe 'CfDefense::throttle_expire_keys' do
   def window
     10 * 1000 # in milliseconds
   end
 
   before do
-    Rack::Defense.setup do |config|
+    CfDefense.setup do |config|
       # allow 1 requests per #window per ip
       config.throttle('rule', 3, window) { |req| req.ip if req.path == '/path' }
     end
@@ -14,8 +14,8 @@ describe 'Rack::Defense::throttle_expire_keys' do
 
   it 'expire throttle key' do
     ip = '192.168.169.244'
-    throttle_key = "#{Rack::Defense::ThrottleCounter::KEY_PREFIX}:rule:#{ip}"
-    redis = Rack::Defense.config.store
+    throttle_key = "#{CfDefense::ThrottleCounter::KEY_PREFIX}:rule:#{ip}"
+    redis = CfDefense.config.store
     start = Time.now.to_i
     3.times do
       get '/path', {}, 'REMOTE_ADDR' => ip

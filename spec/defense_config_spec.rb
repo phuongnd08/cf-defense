@@ -1,8 +1,8 @@
 require_relative 'spec_helper'
 
-describe Rack::Defense::Config do
+describe CfDefense::Config do
   before do
-    @config = Rack::Defense::Config.new
+    @config = CfDefense::Config.new
   end
 
   describe 'store' do

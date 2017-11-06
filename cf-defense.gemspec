@@ -2,11 +2,11 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-require 'rack/defense/version'
+require 'cf-defense/version'
 
 Gem::Specification.new do |s|
   s.name = 'rack-defense'
-  s.version = Rack::Defense::VERSION
+  s.version = CfDefense::VERSION
   s.license = 'MIT'
 
   s.authors = ['Chaker Nakhli']

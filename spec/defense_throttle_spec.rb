@@ -1,6 +1,6 @@
 require_relative 'spec_helper'
 
-describe 'Rack::Defense::throttle' do
+describe 'CfDefense::throttle' do
   def window
     60 * 1000 # in milliseconds
   end
@@ -9,10 +9,10 @@ describe 'Rack::Defense::throttle' do
     @start_time = Time.utc(2015, 10, 30, 21, 0, 0)
 
     #
-    # configure the Rack::Defense middleware with throttling
+    # configure the CfDefense middleware with throttling
     # strategies.
     #
-    Rack::Defense.setup do |config|
+    CfDefense.setup do |config|
       # allow only 3 post requests on path '/login' per #window per ip
       config.throttle('login', 3, window) do |req|
         req.ip if req.path == '/login' && req.post?

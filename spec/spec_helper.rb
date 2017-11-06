@@ -13,14 +13,14 @@ class MiniTest::Spec
 
   def app
     Rack::Builder.new {
-      use Rack::Defense
+      use CfDefense
       run ->(_) { [200, {}, ['Hello World']] }
     }.to_app
   end
 
   before do
     Timecop.safe_mode = true
-    keys = Redis.current.keys("#{Rack::Defense::ThrottleCounter::KEY_PREFIX}:*")
+    keys = Redis.current.keys("#{CfDefense::ThrottleCounter::KEY_PREFIX}:*")
     Redis.current.del *keys if keys.any?
   end
 end
