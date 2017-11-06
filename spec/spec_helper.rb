@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'rack/test'
 require 'redis'
+require 'redis_test'
 require 'timecop'
 require 'cf-defense'
 
@@ -18,9 +19,12 @@ class MiniTest::Spec
     }.to_app
   end
 
+  STDOUT.puts "MiniTest::global-initialize"
+  Timecop.safe_mode = true
+  RedisTest.start
+  RedisTest.configure(:default)
+
   before do
-    Timecop.safe_mode = true
-    keys = Redis.current.keys("#{CfDefense::ThrottleCounter::KEY_PREFIX}:*")
-    Redis.current.del *keys if keys.any?
+    RedisTest.clear
   end
 end
